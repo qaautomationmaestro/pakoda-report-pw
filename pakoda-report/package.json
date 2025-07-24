@@ -1,6 +1,6 @@
 {
   "name": "@qaautomationmaestro/pakoda-report",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "A beautiful custom Playwright reporter with modern UI elements",
   "main": "index.js",
   "types": "index.d.ts",
