@@ -1,6 +1,6 @@
 {
   "name": "pakoda-report",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A beautiful custom Playwright reporter with modern UI elements",
   "main": "index.js",
   "types": "index.d.ts",
