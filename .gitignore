@@ -204,8 +204,7 @@ ehthumbs.db
 Thumbs.db
 
 # Pakoda Report specific
-pakoda-report/
-**/pakoda-report/
+
 test-results/
 **/test-results/
 

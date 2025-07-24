@@ -1,0 +1,46 @@
+{
+  "name": "pakoda-report",
+  "version": "1.0.1",
+  "description": "A beautiful custom Playwright reporter with modern UI elements",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "keywords": [
+    "playwright",
+    "reporter",
+    "testing",
+    "automation",
+    "html-report"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/pakoda-report.git"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "templates/",
+    "assets/",
+    "README.md"
+  ],
+  "dependencies": {
+    "fs-extra": "^11.2.0",
+    "path": "^0.12.7"
+  },
+  "peerDependencies": {
+    "@playwright/test": "^1.40.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

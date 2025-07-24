@@ -1,0 +1,233 @@
+/* Tailwind CSS base styles */
+@import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css');
+
+/* Custom fonts */
+.font-inter {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Custom animations */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Custom component styles */
+.summary-card {
+  animation: slideInUp 0.6s ease-out forwards;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.summary-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.filter-btn {
+  @apply px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 border;
+}
+
+.filter-btn:not(.active) {
+  @apply bg-gray-700 text-gray-300 border-gray-600 hover:bg-gray-600 hover:text-white;
+}
+
+.filter-btn.active {
+  @apply bg-blue-600 text-white border-blue-600 shadow-lg;
+}
+
+.test-item {
+  @apply p-6 hover:bg-gray-750 transition-colors duration-200;
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.test-item.hidden {
+  display: none;
+}
+
+.test-status-badge {
+  @apply px-3 py-1 rounded-full text-sm font-medium flex items-center space-x-2;
+}
+
+.test-status-passed {
+  @apply bg-green-900 text-green-300 border border-green-700;
+}
+
+.test-status-failed {
+  @apply bg-red-900 text-red-300 border border-red-700;
+}
+
+.test-status-skipped {
+  @apply bg-yellow-900 text-yellow-300 border border-yellow-700;
+}
+
+.test-status-timedOut {
+  @apply bg-orange-900 text-orange-300 border border-orange-700;
+}
+
+/* Error details */
+.error-details {
+  @apply mt-4 p-4 bg-red-950 border-l-4 border-red-500 rounded-r-lg;
+}
+
+.error-message {
+  @apply text-red-300 font-mono text-sm whitespace-pre-wrap;
+}
+
+/* Duration badge */
+.duration-badge {
+  @apply px-2 py-1 bg-gray-700 text-gray-300 rounded text-xs font-mono;
+}
+
+/* Location badge */
+.location-badge {
+  @apply px-2 py-1 bg-blue-900 text-blue-300 rounded text-xs font-mono;
+}
+
+/* Project badge */
+.project-badge {
+  @apply px-2 py-1 bg-purple-900 text-purple-300 rounded text-xs font-medium;
+}
+
+/* Loading spinner */
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Progress bar animation */
+.progress-animate {
+  animation: progressFill 2s ease-out forwards;
+}
+
+@keyframes progressFill {
+  from {
+    width: 0%;
+  }
+  to {
+    width: var(--progress-width);
+  }
+}
+
+/* Dark theme overrides */
+.dark {
+  color-scheme: dark;
+}
+
+/* Light theme */
+.light {
+  @apply bg-gray-50 text-gray-900;
+}
+
+.light .bg-gray-900 {
+  @apply bg-gray-50;
+}
+
+.light .bg-gray-800 {
+  @apply bg-white border border-gray-200;
+}
+
+.light .bg-gray-700 {
+  @apply bg-gray-100;
+}
+
+.light .text-white {
+  @apply text-gray-900;
+}
+
+.light .text-gray-400 {
+  @apply text-gray-600;
+}
+
+.light .border-gray-700 {
+  @apply border-gray-200;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    @apply px-4;
+  }
+  
+  .summary-card {
+    @apply text-center;
+  }
+  
+  .filter-btn {
+    @apply text-xs px-3 py-1;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus states for accessibility */
+button:focus,
+input:focus {
+  @apply outline-none ring-2 ring-blue-500 ring-opacity-50;
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    @apply bg-white text-black;
+  }
+  
+  .summary-card {
+    @apply break-inside-avoid;
+  }
+}

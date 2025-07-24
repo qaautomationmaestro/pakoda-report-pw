@@ -1,0 +1,105 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Get package info
+        id: package
+        run: |
+          echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+          echo "name=$(node -p "require('./package.json').name")" >> $GITHUB_OUTPUT
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          # Get the previous tag
+          PREVIOUS_TAG=$(git tag --sort=-version:refname | sed -n '2p')
+          if [ -z "$PREVIOUS_TAG" ]; then
+            PREVIOUS_TAG=$(git rev-list --max-parents=0 HEAD)
+          fi
+          
+          # Generate changelog
+          CHANGELOG=$(git log ${PREVIOUS_TAG}..HEAD --pretty=format:"- %s (%h)" --no-merges)
+          
+          # Save changelog to output
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: 🥟 ${{ steps.package.outputs.name }} v${{ steps.package.outputs.version }}
+          body: |
+            ## 🥟 Pakoda Report v${{ steps.package.outputs.version }}
+            
+            ### What's New
+            ${{ steps.changelog.outputs.changelog }}
+            
+            ### Features
+            - 🎨 Beautiful modern HTML reporter for Playwright tests
+            - 🌓 Dark/Light theme support with smooth transitions
+            - 📊 Interactive dashboard with real-time statistics
+            - 🔍 Advanced filtering and search functionality
+            - 📱 Responsive design for all devices
+            - 💾 Export functionality for report data
+            - 🚀 Fast performance optimized for large test suites
+            - 🎭 Native Playwright integration with full feature support
+            
+            ### Installation
+            ```bash
+            npm install pakoda-report@${{ steps.package.outputs.version }} --save-dev
+            ```
+            
+            ### Quick Start
+            Add to your `playwright.config.js`:
+            ```javascript
+            import { defineConfig } from '@playwright/test';
+            
+            export default defineConfig({
+              reporter: [
+                ['list'],
+                ['pakoda-report', { outputDir: 'pakoda-report' }]
+              ],
+              // ... rest of your config
+            });
+            ```
+            
+            ### Links
+            - 📦 [NPM Package](https://www.npmjs.com/package/pakoda-report)
+            - 📚 [Documentation](https://github.com/${{ github.repository }}/blob/main/README.md)
+            - 🐛 [Report Issues](https://github.com/${{ github.repository }}/issues)
+            - 💬 [Discussions](https://github.com/${{ github.repository }}/discussions)
+            
+            ### Browser Support
+            - ✅ Chrome/Chromium
+            - ✅ Firefox
+            - ✅ Safari/WebKit
+            - ✅ Mobile browsers
+            
+            ---
+            
+            **Made with 🥟 and lots of ☕ by the Pakoda Team**
+          draft: false
+          prerelease: false
