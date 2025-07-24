@@ -5,7 +5,7 @@ import * as path from 'path';
 interface TestData {
   id: string;
   title: string;
-  status: 'passed' | 'failed' | 'skipped' | 'timedOut';
+  status: 'passed' | 'failed' | 'skipped' | 'timedOut' | 'interrupted';
   duration: number;
   error?: string;
   annotations: any[];
@@ -83,6 +83,7 @@ class PakodaReporter implements Reporter {
     const failed = this.tests.filter(t => t.status === 'failed').length;
     const skipped = this.tests.filter(t => t.status === 'skipped').length;
     const timedOut = this.tests.filter(t => t.status === 'timedOut').length;
+    const interrupted = this.tests.filter(t => t.status === 'interrupted').length;
 
     return {
       total,
@@ -90,6 +91,7 @@ class PakodaReporter implements Reporter {
       failed,
       skipped,
       timedOut,
+      interrupted,
       passRate: total > 0 ? Math.round((passed / total) * 100) : 0
     };
   }
